@@ -1,6 +1,6 @@
 # Gr4vy Android SDK
 
-![Build Status](https://github.com/gr4vy/gr4vy-android/actions/workflows/build.yml/badge.svg?branch=main)
+![Build Status](https://github.com/gr4vy/gr4vy-android/actions/workflows/build.yaml/badge.svg?branch=main)
 
 Quickly embed Gr4vy in your Android app to store card details, authorize payments, and capture a transaction.
 
