@@ -66,7 +66,7 @@ To use Gr4vy Embed call the `.launch()` method:
         token = [TOKEN],
         amount = 1299,
         currency = "USD",
-        country = "US"
+        country = "US")
 ```
 
 > **Note**:
