@@ -1,0 +1,141 @@
+package com.gr4vy.android_sdk.web
+
+import android.os.Parcel
+import com.gr4vy.android_sdk.models.Gr4vyResult
+import com.gr4vy.android_sdk.models.IConfig
+import com.gr4vy.android_sdk.models.Parameters
+import junit.framework.TestCase
+import org.junit.Test
+
+class MessageHandlerTest : TestCase() {
+
+    @Test
+    fun testHandleMessageReturnsErrorWhenMessageIsUnknown() {
+
+        val expectedChannel = "123"
+
+        val status = "bad-status"
+
+        val message =
+            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$status\"}}"
+
+        val messageHandler = MessageHandler(testParameters)
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        val gr4vyResult = (messageHandlerResult as Gr4vyMessageResult).result
+
+        assert(gr4vyResult is Gr4vyResult.GeneralError)
+    }
+
+    @Test
+    fun testHandleMessageReturnsFrameReadyWhenGivenMessage() {
+
+        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"buyerId\":\"config-buyerId\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\"}}"
+        val expectedJs = "window.postMessage($expectedJsonToPost)"
+
+        val message = "{\"type\": \"frameReady\", \"channel\": \"123\"}"
+
+        val messageHandler = MessageHandler(testParameters)
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        assert(messageHandlerResult is FrameReady)
+        assertEquals(expectedJs, (messageHandlerResult as FrameReady).js)
+    }
+
+    @Test
+    fun testHandleMessageEncodesOptionalFieldsWhenNotNull() {
+
+        val expectedExternalIdentifier = "expected-indentifier"
+        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"buyerId\":\"config-buyerId\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\",\"externalIdentifier\":\"$expectedExternalIdentifier\"}}"
+        val expectedJs = "window.postMessage($expectedJsonToPost)"
+
+        val message = "{\"type\": \"frameReady\", \"channel\": \"123\"}"
+
+        val messageHandler = MessageHandler(testParameters.copy(externalIdentifier = expectedExternalIdentifier))
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        assert(messageHandlerResult is FrameReady)
+        assertEquals(expectedJs, (messageHandlerResult as FrameReady).js)
+    }
+
+    @Test
+    fun testHandleMessageReturnsOpen3dsWhenGivenMessage() {
+
+        val expectedUrl = "https://test.com"
+        val expectedChannel = "123"
+
+        val message = "{\"type\": \"approvalUrl\", \"channel\": \"$expectedChannel\", \"data\": \"$expectedUrl\"}"
+
+        val messageHandler = MessageHandler(testParameters)
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        assert(messageHandlerResult is Open3ds)
+        assertEquals(expectedUrl, (messageHandlerResult as Open3ds).url)
+    }
+
+    private fun testReturnsTransactionCreatedWhenMessageIs(expectedStatus: String) {
+
+        val expectedChannel = "123"
+
+        val message =
+            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$expectedStatus\"}}"
+
+        val messageHandler = MessageHandler(testParameters)
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        val gr4vyResult = (messageHandlerResult as Gr4vyMessageResult).result
+
+        assertEquals(expectedStatus, (gr4vyResult as Gr4vyResult.TransactionCreated).status)
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionCreatedWhenMessageHasStatusOfCaptureSucceeded() {
+        testReturnsTransactionCreatedWhenMessageIs("capture_succeeded")
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionCreatedWhenMessageHasStatusOfCapturePending() {
+        testReturnsTransactionCreatedWhenMessageIs("capture_pending")
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionCreatedWhenMessageHasStatusOfAuthSucceeded() {
+        testReturnsTransactionCreatedWhenMessageIs("authorization_succeeded")
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionCreatedWhenMessageHasStatusOfAuthPending() {
+        testReturnsTransactionCreatedWhenMessageIs("authorization_pending")
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionFailedWhenMessageHasStatusOfCaptureDeclined() {
+        testReturnsTransactionFailedWhenMessageIs("capture_declined")
+    }
+
+    @Test
+    fun testHandleMessageReturnsTransactionFailedWhenMessageHasStatusOfAuthFailed() {
+        testReturnsTransactionFailedWhenMessageIs("authorization_failed")
+    }
+
+    private fun testReturnsTransactionFailedWhenMessageIs(expectedStatus: String) {
+
+        val expectedChannel = "123"
+
+        val message =
+            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$expectedStatus\"}}"
+
+        val messageHandler = MessageHandler(testParameters)
+
+        val messageHandlerResult = messageHandler.handleMessage(message)
+
+        val gr4vyResult = (messageHandlerResult as Gr4vyMessageResult).result
+
+        assertEquals(expectedStatus, (gr4vyResult as Gr4vyResult.TransactionFailed).status)
+    }
+}

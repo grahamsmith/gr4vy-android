@@ -1,0 +1,37 @@
+name: gr4vy-Android release workflow
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Test
+        run: ./gradlew GravySDK:test
+
+      - name: Build Release AAR
+        run: ./gradlew assembleRelease
+
+      - name: Create Draft Release with Artifacts
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "GravySDK/build/outputs/aar/*.aar"
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
