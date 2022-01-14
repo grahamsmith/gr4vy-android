@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.gr4vy:gr4vy_android:VERSION'
+  implementation 'com.github.gr4vy:gr4vy-android:v1.0.0'
 }
 ```
 
