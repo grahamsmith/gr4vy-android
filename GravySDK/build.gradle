@@ -46,3 +46,17 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.gr4vy'
+                artifactId = 'android-sdk'
+                version = '1.0.1'
+            }
+        }
+    }
+}
