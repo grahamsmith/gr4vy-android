@@ -6,12 +6,16 @@ import kotlinx.parcelize.Parcelize
 sealed class Gr4vyResult : Parcelable {
     @Parcelize
     class TransactionCreated(
+        val transactionId: String,
         val status: String,
+        val paymentMethodId: String?
     ) : Gr4vyResult()
 
     @Parcelize
     class TransactionFailed(
+        val transactionId: String,
         val status: String,
+        val paymentMethodId: String?
     ) : Gr4vyResult()
 
     @Parcelize

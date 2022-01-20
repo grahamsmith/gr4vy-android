@@ -72,10 +72,20 @@ class MessagePolymorphicSerializerTest : TestCase() {
 
         val expectedChannel = "123"
         val expectedStatus = "expected-status"
+        val expectedTransactionId = "expected-transaction-id"
+        val expectedPaymentMethodId = "expected-payment-method-id"
 
         val result = format.decodeFromString(
             MessagePolymorphicSerializer(),
-            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$expectedStatus\"}}"
+            "{" +
+                        "\"type\": \"transactionCreated\"," +
+                        " \"channel\": \"$expectedChannel\"," +
+                        " \"data\": {" +
+                                "\"status\": \"$expectedStatus\"," +
+                                "\"transactionID\": \"$expectedTransactionId\"," +
+                                "\"paymentMethodID\": \"$expectedPaymentMethodId\"" +
+                        "}" +
+                    "}"
         )
 
         assertTrue(

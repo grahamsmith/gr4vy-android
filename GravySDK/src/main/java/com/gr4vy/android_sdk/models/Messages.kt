@@ -1,10 +1,13 @@
 package com.gr4vy.android_sdk.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Transaction(
     val status: String,
+    @SerialName("transactionID") val transactionId: String,
+    @SerialName("paymentMethodID") val paymentMethodId: String?
 )
 
 @Serializable
@@ -48,7 +51,7 @@ data class UpdateMessage(
                 data = Update(
                     apiHost = "api.${parameters.config.instance}.gr4vy.app",
                     apiUrl = "https://api.${parameters.config.instance}.gr4vy.app",
-                    buyerId = parameters.config.buyerId,
+                    buyerId = parameters.buyerId,
                     token = parameters.token,
                     amount = parameters.amount,
                     country = parameters.country,
@@ -67,11 +70,11 @@ data class UpdateMessage(
 data class Update(
     val apiHost: String,
     val apiUrl: String,
-    val buyerId: String,
     val token: String,
     val amount: Int,
     val country: String,
     val currency: String,
+    val buyerId: String?,
     val externalIdentifier: String? = null,
     val store: String? = null,
     val display: String? = null,

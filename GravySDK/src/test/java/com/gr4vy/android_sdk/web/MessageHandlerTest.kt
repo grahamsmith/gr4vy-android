@@ -1,9 +1,6 @@
 package com.gr4vy.android_sdk.web
 
-import android.os.Parcel
 import com.gr4vy.android_sdk.models.Gr4vyResult
-import com.gr4vy.android_sdk.models.IConfig
-import com.gr4vy.android_sdk.models.Parameters
 import junit.framework.TestCase
 import org.junit.Test
 
@@ -12,26 +9,23 @@ class MessageHandlerTest : TestCase() {
     @Test
     fun testHandleMessageReturnsErrorWhenMessageIsUnknown() {
 
-        val expectedChannel = "123"
-
-        val status = "bad-status"
-
         val message =
-            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$status\"}}"
+            "{" +
+                "\"type\": \"unknown\"," +
+                " \"channel\": \"123\"" +
+            "}"
 
         val messageHandler = MessageHandler(testParameters)
 
         val messageHandlerResult = messageHandler.handleMessage(message)
 
-        val gr4vyResult = (messageHandlerResult as Gr4vyMessageResult).result
-
-        assert(gr4vyResult is Gr4vyResult.GeneralError)
+        assert(messageHandlerResult is Unknown)
     }
 
     @Test
     fun testHandleMessageReturnsFrameReadyWhenGivenMessage() {
 
-        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"buyerId\":\"config-buyerId\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\"}}"
+        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\",\"buyerId\":\"buyerId\"}}"
         val expectedJs = "window.postMessage($expectedJsonToPost)"
 
         val message = "{\"type\": \"frameReady\", \"channel\": \"123\"}"
@@ -48,7 +42,7 @@ class MessageHandlerTest : TestCase() {
     fun testHandleMessageEncodesOptionalFieldsWhenNotNull() {
 
         val expectedExternalIdentifier = "expected-indentifier"
-        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"buyerId\":\"config-buyerId\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\",\"externalIdentifier\":\"$expectedExternalIdentifier\"}}"
+        val expectedJsonToPost = "{\"type\":\"updateOptions\",\"data\":{\"apiHost\":\"api.config-instance.gr4vy.app\",\"apiUrl\":\"https://api.config-instance.gr4vy.app\",\"token\":\"token\",\"amount\":10873,\"country\":\"GB\",\"currency\":\"GBP\",\"buyerId\":\"buyerId\",\"externalIdentifier\":\"$expectedExternalIdentifier\"}}"
         val expectedJs = "window.postMessage($expectedJsonToPost)"
 
         val message = "{\"type\": \"frameReady\", \"channel\": \"123\"}"
@@ -82,7 +76,15 @@ class MessageHandlerTest : TestCase() {
         val expectedChannel = "123"
 
         val message =
-            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$expectedStatus\"}}"
+            "{" +
+                "\"type\": \"transactionCreated\", " +
+                "\"channel\": \"$expectedChannel\", " +
+                "\"data\": {" +
+                        "\"status\": \"$expectedStatus\"," +
+                        "\"transactionID\": \"$expectedStatus\"," +
+                        "\"paymentMethodID\": \"$expectedStatus\"" +
+                    "}" +
+            "}"
 
         val messageHandler = MessageHandler(testParameters)
 
@@ -128,7 +130,15 @@ class MessageHandlerTest : TestCase() {
         val expectedChannel = "123"
 
         val message =
-            "{\"type\": \"transactionCreated\", \"channel\": \"$expectedChannel\", \"data\": {\"status\": \"$expectedStatus\"}}"
+            "{" +
+                "\"type\": \"transactionCreated\"," +
+                " \"channel\": \"$expectedChannel\"," +
+                " \"data\": {" +
+                        "\"status\": \"$expectedStatus\"," +
+                        "\"transactionID\": \"$expectedStatus\"," +
+                        "\"paymentMethodID\": \"$expectedStatus\"" +
+                    "}" +
+            "}"
 
         val messageHandler = MessageHandler(testParameters)
 

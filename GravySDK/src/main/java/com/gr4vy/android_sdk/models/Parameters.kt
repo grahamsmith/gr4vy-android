@@ -10,6 +10,7 @@ data class Parameters(
     val amount: Int,
     val currency: String,
     val country: String,
+    val buyerId: String?,
     val externalIdentifier: String?,
     val store: String?,
     val display: String?,
