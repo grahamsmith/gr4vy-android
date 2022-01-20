@@ -33,11 +33,8 @@ Add the following meta information to your App's manifest
 
 `<meta-data android:name="gr4vy-id" android:value="[GRAVY_ID]" />`
 
-`<meta-data android:name="gr4vy-buyerId" android:value="[BUYER_ID]" />`
-
 > **Note**:
 > Replace `[GR4VY_ID]` with the ID of your instance.
-> Replace `[BUYER_ID]` with your buyer
 
 You can specify if you want to target the sandbox environment.
 You do NOT need to set this if targeting production but a value of "production" can be set if needed.
@@ -87,7 +84,7 @@ These are the options available in this SDK:
 | `amount`                  | **`Required`**      | The amount to authorize or capture in the specified `currency` only.|                                                                                   |
 | `currency`                | **`Required`**      | A valid, active, 3-character `ISO 4217` currency code to authorize or capture the `amount` for.|
 | `country`                 | **`Required`**      | A valid `ISO 3166` country code.|
-| `buyerId`                 | **`Required`**      | Provided in the manifest. The buyer ID for this transaction. The transaction will automatically be associated to a buyer with that ID.|
+| `buyerId`                 | `Optional`      | Provided in the manifest. The buyer ID for this transaction. The transaction will automatically be associated to a buyer with that ID.|
 | `externalIdentifier`      | `Optional`      | An optional external identifier that can be supplied. This will automatically be associated to any resource created by Gr4vy and can subsequently be used to find a resource by that ID. |
 | `store`                   | `Optional`       | `'ask'`, `true`, `false` - Explicitly store the payment method or ask the buyer, this is used when a buyerId is provided.|
 | `display`                 | `Optional`       | `all`, `addOnly`, `storedOnly`, `supportsTokenization` - Filters the payment methods to show stored methods only, new payment methods only or methods that support tokenization.
