@@ -5,6 +5,5 @@ import android.os.Parcelable
 interface IConfig : Parcelable {
     val id: String
     val instance: String
-    val buyerId: String
     val debug: Boolean
 }

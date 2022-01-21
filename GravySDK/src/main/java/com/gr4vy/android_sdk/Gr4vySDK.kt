@@ -46,6 +46,7 @@ class Gr4vySDK(
      * @param amount the amount to charge for the transaction
      * @param currency the currency to use. For example "GBP" for British Pounds
      * @param country a short country code. For example "GB"
+     * @param buyerId BuyerId is an optional Identifier that can be set to distinguish a customer
      */
     fun launch(
         context: Context,
@@ -53,6 +54,7 @@ class Gr4vySDK(
         amount: Int,
         currency: String,
         country: String,
+        buyerId: String? = null,
         externalIdentifier: String? = null,
         store: String? = null,
         display: String? = null,
@@ -66,6 +68,7 @@ class Gr4vySDK(
 
         val parameters = Parameters(
             config = config,
+            buyerId = buyerId,
             token = token,
             amount = amount,
             currency = currency,

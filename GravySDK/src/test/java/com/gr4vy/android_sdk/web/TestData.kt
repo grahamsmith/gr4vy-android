@@ -7,7 +7,6 @@ import com.gr4vy.android_sdk.models.Parameters
 private val testConfig = object: IConfig {
     override val id = "config-id"
     override val instance = "config-instance"
-    override val buyerId = "config-buyerId"
     override val debug = false
 
     override fun describeContents(): Int {
@@ -21,6 +20,7 @@ private val testConfig = object: IConfig {
 
 val testParameters = Parameters(
     config =  testConfig,
+    buyerId = "buyerId",
     token = "token",
     amount = 10873,
     currency = "GBP",

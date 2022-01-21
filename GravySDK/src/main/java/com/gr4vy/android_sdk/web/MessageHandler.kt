@@ -32,13 +32,19 @@ class MessageHandler(private val parameters: Parameters) {
                     "capture_succeeded", "capture_pending", "authorization_succeeded", "authorization_pending" -> {
                         return Gr4vyMessageResult(
                             Gr4vyResult.TransactionCreated(
-                                status = decodedMessage.data.status
+                                status = decodedMessage.data.status,
+                                paymentMethodId = decodedMessage.data.paymentMethodId,
+                                transactionId = decodedMessage.data.transactionId,
                             )
                         )
                     }
                     "capture_declined", "authorization_failed" -> {
                         return Gr4vyMessageResult(
-                            Gr4vyResult.TransactionFailed(status = decodedMessage.data.status)
+                            Gr4vyResult.TransactionFailed(
+                                status = decodedMessage.data.status,
+                                paymentMethodId = decodedMessage.data.paymentMethodId,
+                                transactionId = decodedMessage.data.transactionId,
+                            )
                         )
                     }
                     else -> {
