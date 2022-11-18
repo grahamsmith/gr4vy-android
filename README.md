@@ -31,15 +31,15 @@ dependencies {
 
 Add the following meta information to your App's manifest
 
-`<meta-data android:name="gr4vy-id" android:value="[GRAVY_ID]" />`
+```
+<meta-data android:name="gr4vy-id" android:value="[GRAVY_ID]" />
+<meta-data android:name="gr4vy-environment" android:value="[ENVIRONMENT]" />
+```
 
 > **Note**:
-> Replace `[GR4VY_ID]` with the ID of your instance.
+> Replace `[GR4VY_ID]` with the ID of your instance and `[ENVIRONMENT]` 
+> with either the `sandbox` or `production` environment.
 
-You can specify if you want to target the sandbox environment.
-You do NOT need to set this if targeting production but a value of "production" can be set if needed.
-
-`<meta-data android:name="gr4vy-environment" android:value="sandbox" />`
 
 ## Running
 
