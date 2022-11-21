@@ -29,7 +29,7 @@ class Secure3DActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview).apply {
+        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.webview).apply {
             this.webViewClient = WebViewClient()
             this.webChromeClient = chromeClient
             this.settings.javaScriptEnabled = true

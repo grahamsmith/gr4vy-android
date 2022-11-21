@@ -42,7 +42,7 @@ class Gr4vyActivity : AppCompatActivity() {
             this.callback = { message -> handleCallback(message) }
         }
 
-        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview)?.apply {
+        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.webview)?.apply {
             WebView.setWebContentsDebuggingEnabled(true)
             this.webViewClient = WebViewClient()
             this.webChromeClient = chromeClient
@@ -68,7 +68,7 @@ class Gr4vyActivity : AppCompatActivity() {
 
         val result = data?.getStringExtra(Secure3DActivity.RESULT_KEY).orEmpty()
 
-        val webView = findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview);
+        val webView = findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.webview);
         webView.evaluateJavascript("window.postMessage($result)", null)
     }
 
