@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import com.gr4vy.android_sdk.web.MyWebChromeClient
-import com.gr4vy.gr4vy_android.R
+
 
 class Secure3DActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.gr4vy_toolbar))
+        setContentView(com.gr4vy.gr4vy_android.R.layout.activity_main)
+        setSupportActionBar(findViewById(com.gr4vy.gr4vy_android.R.id.gr4vy_toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -29,7 +29,7 @@ class Secure3DActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<WebView>(R.id.gr4vy_webview).apply {
+        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview).apply {
             this.webViewClient = WebViewClient()
             this.webChromeClient = chromeClient
             this.settings.javaScriptEnabled = true

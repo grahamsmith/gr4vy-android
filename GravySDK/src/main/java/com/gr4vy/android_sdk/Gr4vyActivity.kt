@@ -18,7 +18,6 @@ import com.gr4vy.android_sdk.web.MessageHandler
 import com.gr4vy.android_sdk.web.MyWebChromeClient
 import com.gr4vy.android_sdk.web.UrlFactory
 import com.gr4vy.android_sdk.web.WebAppInterface
-import com.gr4vy.gr4vy_android.R
 
 class Gr4vyActivity : AppCompatActivity() {
 
@@ -27,8 +26,8 @@ class Gr4vyActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.gr4vy_toolbar))
+        setContentView(com.gr4vy.gr4vy_android.R.layout.activity_main)
+        setSupportActionBar(findViewById(com.gr4vy.gr4vy_android.R.id.gr4vy_toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -43,7 +42,7 @@ class Gr4vyActivity : AppCompatActivity() {
             this.callback = { message -> handleCallback(message) }
         }
 
-        findViewById<WebView>(R.id.gr4vy_webview_trial).apply {
+        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview).apply {
             WebView.setWebContentsDebuggingEnabled(true)
             this.webViewClient = WebViewClient()
             this.webChromeClient = chromeClient
@@ -69,7 +68,7 @@ class Gr4vyActivity : AppCompatActivity() {
 
         val result = data?.getStringExtra(Secure3DActivity.RESULT_KEY).orEmpty()
 
-        val webView = findViewById<WebView>(R.id.gr4vy_webview_trial);
+        val webView = findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview);
         webView.evaluateJavascript("window.postMessage($result)", null)
     }
 
