@@ -20,7 +20,7 @@ import com.gr4vy.android_sdk.web.UrlFactory
 import com.gr4vy.android_sdk.web.WebAppInterface
 import com.gr4vy.gr4vy_android.R
 
-class MainActivity : AppCompatActivity() {
+class Gr4vyActivity : AppCompatActivity() {
 
     private val parameters: Parameters by lazy { intent.getParcelableExtra<Parameters>(PARAMETERS_EXTRA_KEY) as Parameters }
 
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         const val RESULT_KEY = "GR4VY_RESULT"
 
         fun createIntentWithParameters(context: Context, parameters: Parameters): Intent {
-            return Intent(context, MainActivity::class.java).apply {
+            return Intent(context, Gr4vyActivity::class.java).apply {
                 putExtra(PARAMETERS_EXTRA_KEY, parameters)
             }
         }
