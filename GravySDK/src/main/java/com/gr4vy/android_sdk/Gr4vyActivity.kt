@@ -42,7 +42,7 @@ class Gr4vyActivity : AppCompatActivity() {
             this.callback = { message -> handleCallback(message) }
         }
 
-        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview).apply {
+        findViewById<WebView>(com.gr4vy.gr4vy_android.R.id.gr4vy_webview)?.apply {
             WebView.setWebContentsDebuggingEnabled(true)
             this.webViewClient = WebViewClient()
             this.webChromeClient = chromeClient
